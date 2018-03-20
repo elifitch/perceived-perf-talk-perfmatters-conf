@@ -1,0 +1,65 @@
+/*********************************************
+ * HEADERS
+ *********************************************/
+
+.reveal h1,
+.reveal h2,
+.reveal h3,
+.reveal h4,
+.reveal h5,
+.reveal h6 {
+	font-family: $headingFont !important;
+	// position: relative;
+	// display: inline-block;
+	// &:after {
+	// 	content: '';
+	// 	width: 100%;
+	// 	height: .1em;
+	// 	bottom: 0em;
+	// 	left: -.05em;
+	// 	z-index: -1;
+	// 	transform: skew(-7.77deg);
+	// 	border-radius: .01em;
+	// 	background: $color-pink;
+	// 	position: absolute;
+	// }
+}
+.reveal h1 {
+	margin-bottom: 0.5em;
+}
+.reveal section img {
+	box-shadow: 0 0.2em 1em 0em rgba(0, 0, 0, 0.2);
+	border: none;
+}
+.reveal .title {
+	// font-size: 3.2em;
+	font-size: 3em;
+}
+.reveal .sub-title {
+	font-size: 2.7em;
+}
+.reveal .title--gradient {
+	// color: transparent;
+	// background: url("../../../img/pink-orange-gradient.svg") repeat;
+	background: url("../../img/pink-orange-gradient.svg") repeat;
+	background-clip: text;
+	-webkit-text-fill-color: transparent;
+	-webkit-background-clip: text;
+	background-size: 100%;
+	// display: inline-block;
+	// color: red;
+}
+.citation, .reveal .citation {
+	font-family: $headingFont !important;
+	left: 50%;
+    transform: translateX(-50%);
+    display: inline-block;
+    position: absolute;
+    // padding-top: 1em;
+    margin-top: 1em;
+    width: auto;
+    color: rgba(0,0,0,.6);
+}
+.reveal .end-link {
+	color: rgba(0,0,0,0.6);
+}

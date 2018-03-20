@@ -1,0 +1,109 @@
+<head>
+	<link rel="stylesheet prefetch" href="lib/css/foundation-grid-only.min.css">
+	<link rel="stylesheet prefetch" href="../css/theme/eli-pres-light.css">
+	<script src="lib/js/tweenmax.min.js"></script>
+
+	<style>
+		body {
+			background: transparent;
+		}
+		.container {
+			padding-top: 2em;
+			padding-top: 2em;
+			height: 100vh;
+			display: flex;
+			align-items: center;
+		}
+		.action-jackson {
+			display: flex;
+			flex-direction: column;
+		}
+		.button {
+			transition: transform 0.2s;
+
+		}
+		.full-width {
+			width: 100%;
+		}
+		.bar {
+			margin-bottom: 1rem; 
+		}
+		.bar__prog {
+			width: 0;
+			height: 1.5em;
+		}
+	</style>
+</head>
+<body class="demo">
+	<div class="container">
+		<div class="full-width">
+			<div class="row">
+				<div class="column small-12">
+					<button class="button js-button-start u-mb-2r">Start loading</button>
+					<div class="action-jackson">
+						<div class="bar">
+							<div class="bar__prog"></div>
+							<div class="bar__stripes bar__stripes--counterflow-speedup"></div>
+						</div>
+						<h4 class="bar__annotation">&nbsp;</h4>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+
+<script>
+	var bar = document.querySelectorAll('.bar__prog')[0];
+	var stripes = document.querySelectorAll('.bar__stripes')[0];
+	var startButton = document.querySelectorAll('.js-button-start')[0];
+	var annotationEl = document.querySelectorAll('.bar__annotation')[0];
+
+	var messages = [
+		'Building detailed objects',
+		'Loading high def textures',
+		'Creating immersive environment',
+		'Making beautiful lighting effects',
+		'Compiling your game. Almost ready to play!'
+	];
+
+	function start() {
+		var currentMessageIndex = -1;
+		bar.style.width = 0;
+		TweenMax.set(bar, {width: 0});
+		TweenMax.set(stripes, {x: 0});
+		// TweenMax.fromTo(bar, 10, {width: 0}, {
+		// 	width: '100%', 
+		// 	ease: Power0.easeNone, 
+		// 	onUpdate: function() {
+		// 		if (Math.floor(this.progress() * (messages.length)) > currentMessageIndex) {
+		// 			currentMessageIndex = Math.floor(this.progress() * (messages.length));
+		// 			annotationEl.innerHTML = messages[currentMessageIndex] ? messages[currentMessageIndex] : messages[messages.length - 1];
+		// 		}
+		// 	}
+		// });
+		TweenMax.to(bar, 10, {
+			width: '100%', 
+			ease: Power0.easeNone, 
+			onUpdate: function() {
+				if (Math.floor(this.progress() * (messages.length)) > currentMessageIndex) {
+					currentMessageIndex = Math.floor(this.progress() * (messages.length));
+					annotationEl.innerHTML = messages[currentMessageIndex] ? messages[currentMessageIndex] : messages[messages.length - 1];
+				}
+			}
+		});
+		// TweenMax.fromTo(stripes, 10, {x: 0}, {
+		// 	x: '-50%',
+		// 	ease: Power1.easeIn
+		// });
+		TweenMax.to(stripes, 10, {
+			x: '-50%',
+			ease: Power1.easeIn
+		});
+	}
+	function stop() {
+		TweenMax.to(bar, 0.4, {width: '100%', ease: Power2.easeInOut});
+	}
+	startButton.addEventListener('click', start);
+
+</script>

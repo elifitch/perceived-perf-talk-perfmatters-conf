@@ -1,0 +1,48 @@
+<head>
+	<link rel="stylesheet prefetch" href="../css/theme/eli-pres-light.css">
+	<script src="lib/js/jquery.min.js"></script>
+
+	<style>
+		body {
+			background-color: transparent;
+		}
+	</style>
+</head>
+
+<body class="demo">
+	<div class="container u-flex u-align-middle u-align-center">
+		<button class="button button--onclick u-mb-1r">Immediate response</button>
+		<h3 class="readout font-pinopolis">&nbsp;</h3>
+	</div>
+</body>
+
+<script>
+// $('.button--onclick').on('mousedown', showMessage);
+$('.button--onclick').on('click', showMessage);
+let counter = 0;
+
+function showMessage() {
+	setTimeout(function() {
+		$('.readout').html(generateMessage(counter));
+		if (counter < 3) {
+			counter++;
+		} else {
+			counter = 0;
+		}
+	}, 100)
+}
+
+function generateMessage(seed) {
+	const messages = [
+		'le wow, super immediate response',
+		'so satisfying',
+		'who even noticed that delay, not me, a computer',
+		'pringles are better than doritos'
+	];
+
+	// const seed = Math.floor(Math.random() * (messages.length + 1));
+
+	return messages[seed];
+}
+
+</script>

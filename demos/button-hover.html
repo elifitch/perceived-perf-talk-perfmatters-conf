@@ -1,0 +1,63 @@
+<head>
+	<link rel="stylesheet prefetch" href="../css/theme/eli-pres-light.css">
+	<style>
+		html {
+		  font-size: 1.4em;
+		  font-family: 'brandon grotesque';
+		  color: #43d8f8;
+		}
+		body {
+			background: transparent;
+			overflow: hidden;
+		}
+		.container {
+		  padding-top: 2em;
+		  display: flex;
+		  height: 100%;
+		  flex-direction: row;
+		  align-items: center;
+		  justify-content: center;
+		  overflow: hidden;
+		  height: 80%;
+		}
+		.bold {
+		  font-weight: bold;
+		  color: red;
+		}
+
+
+	</style>
+</head>
+<body class="demo">
+	<div class="container">
+		<div>
+			
+		</div>
+		<div href="#" class="button button--goo">
+			hover me
+
+			<div class="button__beaker">
+				<span class="button__blob"></span>
+				<span class="button__blob"></span>
+				<span class="button__blob"></span>
+				<span class="button__blob"></span>
+			</div>
+		</div>
+
+		<div class="button button--slash" data-content="me too">me too</div>
+	</div>
+
+	<svg xmlns="http://www.w3.org/2000/svg" version="1.1" style="display: block; height: 0; width: 0;">
+		<defs>
+			<filter id="goo">
+				<feGaussianBlur in="SourceGraphic" stdDeviation="10" result="blur"></feGaussianBlur>
+				<feColorMatrix in="blur" mode="matrix" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 18 -7" result="goo"></feColorMatrix>
+				<feBlend in="SourceGraphic" in2="goo"></feBlend>
+			</filter>
+		</defs>
+	</svg>
+</body>
+
+<script>
+
+</script>

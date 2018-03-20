@@ -1,0 +1,43 @@
+<head>
+	<link rel="stylesheet prefetch" href="lib/css/foundation-grid-only.min.css">
+	<link rel="stylesheet prefetch" href="../css/theme/eli-pres-light.css">
+	<script src="lib/js/jquery.min.js"></script>
+
+	<style>
+		body {
+			background-color: transparent;
+		}
+		.bold {
+			font-weight: bold;
+			color: red;
+		}
+		.button:active {
+			transform: none !important;
+		}
+	</style>
+</head>
+
+<body class="demo">
+	<div class="container u-flex u-align-middle u-align-center">
+		<button class="button button--onclick u-mb-1r">onmousedown vs onclick</button>
+		<h3 class="readout">&nbsp;</h3>
+	</div>
+</body>
+
+<script>
+let startTime;
+
+$('.button--onclick').on('mousedown', startTimer);
+
+$('.button--onclick').on('click', endTimer);
+
+function startTimer() {
+	startTime = Date.now();
+}
+
+function endTimer() {
+	const nowish = Date.now();
+	const timey = nowish - startTime;
+	$('.readout').html(`Mousedown fired <span class="bold">${timey}ms</span> before click event`);
+}
+</script>

@@ -1,0 +1,62 @@
+<head>
+	<link rel="stylesheet prefetch" href="lib/css/foundation-grid-only.min.css">
+	<link rel="stylesheet prefetch" href="../css/theme/eli-pres-light.css">
+	<script src="lib/js/jquery.min.js"></script>
+
+	<style>
+		body {
+			background-color: transparent;
+		}
+		.button--grab {
+			cursor: -webkit-grab !important;
+		}
+		.button--grab:active {
+			cursor: -webkit-grabbing !important;
+		}
+	</style>
+</head>
+<body class="demo">
+	<div class="container u-flex u-align-middle u-align-center">
+		<button class="button button--onclick button--grab u-mb-1r">Tap me!</button>
+		<h3 class="readout">&nbsp;</h3>
+	</div>
+</body>
+
+<script>
+$('.button--onclick').on('mousedown', start);
+
+function start(e) {
+	console.log('start')
+	$('.readout').html('Loading in background');
+
+	$('.button--onclick').on('mouseup', function() {
+		console.log('mouseup')
+		$('.button--onclick').off('mousemove');
+		$('.readout').html('take action with loaded resources');
+	});
+	
+	// $('.button--onclick').on('mousemove', function(moveEvent) {
+	$(window).on('mousemove', function(moveEvent) {
+		console.log(moveEvent)
+		if (
+			e.clientX - moveEvent.clientX > 50 || 
+			e.clientX - moveEvent.clientX < -50 || 
+			e.clientY - moveEvent.clientY > 50 || 
+			e.clientY - moveEvent.clientY < -50
+		) {
+			cancel();
+		} else {
+			$('.readout').html('moving, but threshhold not exceeded');
+		}
+	});
+}
+
+function cancel() {
+	$(window).off('mousemove');
+	$('.button--onclick').on('mouseup', function() {
+		$('.readout').html('touchended after cancel. Resources loaded but no action taken.');
+	});
+	$('.readout').html('cancelled');
+}
+
+</script>

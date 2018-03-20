@@ -1,0 +1,93 @@
+<head>
+	<link rel="stylesheet prefetch" href="lib/css/foundation-grid-only.min.css">
+	<link rel="stylesheet prefetch" href="../css/theme/eli-pres-light.css">
+
+	<style>
+		body {
+			background: transparent;
+		}
+		.container {
+			/*padding-top: 2em;*/
+			height: 100vh;
+			display: flex;
+			align-items: center;
+			/*padding-top: 5vh;*/
+		}
+		.action-jackson {
+			display: flex;
+			flex-direction: row;
+		}
+		.bar {
+			opacity: 0.1;
+		}
+		.checkbox {
+			-moz-appearance: none;
+			-webkit-appearance: none;
+			width: 2rem;
+			height: 2rem;
+			border-radius:5px;
+			border:2px solid #555;
+			margin-right: 1rem;
+		}
+		.checkbox:checked {
+			background-image: url('../../img/check.svg');
+			background-size: cover;
+		}
+		.checkbox:checked ~ .bar {
+			opacity: 1;
+		}
+		.full-width {
+			width: 100%;
+		}
+		.citation {
+			text-decoration: none;
+			font-size: 2.25em;
+			position: static;
+			left: auto;
+			transform: none;
+		}
+	</style>
+</head>
+
+<div class="container">
+	<div class="full-width">
+		<div class="row">
+			<div class="column small-12 medium-10 medium-offset-1 large-8 large-offset-2">
+				<div class="action-jackson">
+					<input type="checkbox" class="checkbox" checked>
+					<div class="bar">
+						<div class="bar__prog anim-bar"></div>
+					</div>
+				</div>
+			</div>
+		</div>
+			
+		<div class="row">
+			<div class="column small-12 medium-10 medium-offset-1 large-8 large-offset-2">
+				<div class="action-jackson">
+					<input type="checkbox" class="checkbox">
+					<div class="bar">
+						<div class="bar__prog anim-bar">
+							<div class="bar__stripes anim-counter-flow"></div>
+						</div>
+					</div>
+				</div>
+
+			</div>
+		</div>
+			
+		<div class="row">
+			<div class="column small-12 medium-10 medium-offset-1 large-8 large-offset-2">
+				<div class="action-jackson">
+					<input type="checkbox" class="checkbox">
+					<div class="bar">
+						<div class="bar__prog anim-bar">
+							<div class="bar__stripes bar__stripes--counterflow-speedup anim-counter-flow--speedup"></div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<a class="citation" target="_blank" href="http://www.chrisharrison.net/projects/progressbars2/ProgressBarsHarrison.pdf">Chris Harrison, Zhiquan Yeo, and Scott Hudson, Carnegie Mellon</a>
+	</div>
+</div>

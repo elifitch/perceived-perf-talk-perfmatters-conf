@@ -1,0 +1,333 @@
+<head>
+	<link rel="stylesheet prefetch" href="lib/css/foundation-grid-only.min.css">
+	<link rel="stylesheet prefetch" href="../css/theme/eli-pres-light.css">
+	<script src="lib/js/tweenmax.min.js"></script>
+	<script src="lib/js/jquery.min.js"></script>
+	<script src="lib/js/three.min.js"></script>
+	<script src="lib/js/obj-loader.js"></script>
+	<script src="lib/js/futurelink.js"></script>
+
+	<style>
+	body.demo {
+		background-color: transparent;
+	}
+	* {
+		box-sizing: border-box;
+	}
+	.container {
+		padding-top: 2em;
+	}
+	.canvas-container {
+		position: relative;
+		width: 100%;
+		height: 0;
+		padding-bottom: 50%;
+		margin-bottom: 2em;
+		background-color: #fff;
+		border: 6px solid #43d8f8;
+		border-radius: 6px;
+	}
+	.canvas-container canvas {
+		position: absolute;
+		top: 50%;
+		left: 50%;
+		transform: translate(-50%, -50%);
+	}
+	.spinner-container {
+		position: absolute;
+		top: 50%;
+		left: 50%;
+		transform: translate(-50%, -50%);
+		width: 10em;
+		z-index: 1;
+	}
+	.button-container {
+		position: relative;
+		display: inline-block;
+		z-index: 1;
+	}
+
+	.load-area {
+		width: calc(100% + 8em);
+		height: calc(100% + 8em);
+		background-color: lightgray;
+		border: 4px dashed gray;
+		opacity: 0.5;
+		position: absolute;
+		top: 50%;
+		left: 50%;
+		transform: translate(-50%, -50%);
+		z-index: -1;
+		opacity: 0;
+		transition: opacity 0.1s;
+	}
+	.load-area.show {
+		opacity: 0.6;
+	}
+
+	.demo .debug__progress {
+		width: 100%;
+		transform: scaleX(0);
+		transform-origin: left;
+	}
+	.debug-canvas {
+		position: absolute;
+		top: 0;
+		left: 0;
+		height: 100%;
+		width: 100%;
+		z-index: 1;
+		pointer-events: none;
+	}
+	</style>
+</head>
+
+<body class="demo">
+	<div class="container">
+		<div class="row align-center">
+
+			<div class="column small-6">
+				<div class="canvas-container">
+					<div class="spinner-container">
+						<div class="spinner hide"></div>
+					</div>
+				</div>
+
+				<div class="text-center">
+					<div class="button-container">
+						<div href="#" class="button button--goo js-load-button">
+							Load 3D Model
+
+							<div class="button__beaker">
+								<span class="button__blob"></span>
+								<span class="button__blob"></span>
+								<span class="button__blob"></span>
+								<span class="button__blob"></span>
+							</div>
+						</div>
+						<div class="load-area js-load-area"></div>
+					</div>
+				</div>
+			</div>
+			
+			<div class="column small-6 full-height">
+				<div class="debug">
+					<div class="u-mb-1r">
+						<h3 class="debug__details">3D Model Loading Progress</h3>
+					</div>
+					<div class="switch-container u-mb-1r">
+						<div class="switch">
+							<input class="switch-input" id="show-debug" type="checkbox">
+							<label class="switch-paddle" for="show-debug"></label>
+						</div>
+						<label class="switch-label" for="show-debug">Show Accelleration</label>
+					</div>
+
+					<div class="debug__bar">
+						<div class="debug__progress js-debug-progress"></div>
+					</div>
+					<h6 class="js-debug-details debug__readout">0% complete</h6>
+				</div>
+			</div>
+
+		</div>
+	</div>
+
+	<canvas class="debug-canvas js-debug-canvas"></canvas>
+	<svg xmlns="http://www.w3.org/2000/svg" version="1.1" style="display: block; height: 0; width: 0;">
+		<defs>
+			<filter id="goo">
+				<feGaussianBlur in="SourceGraphic" stdDeviation="10" result="blur"></feGaussianBlur>
+				<feColorMatrix in="blur" mode="matrix" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 18 -7" result="goo"></feColorMatrix>
+				<feBlend in="SourceGraphic" in2="goo"></feBlend>
+			</filter>
+		</defs>
+	</svg>
+</body>
+
+<script>
+var DEBUG_THRESHOLD = 0.0001;
+var showDebug = false;
+var isLoading = false;
+// var minLoadTime = 3000;
+var minLoadTime = 2000;
+var initialized = false;
+var button = document.querySelectorAll('.js-load-button')[0];
+var renderer;
+var scene;
+var camera;
+var controls;
+var container = document.querySelectorAll('.canvas-container')[0];
+var loadArea = document.querySelectorAll('.js-load-area')[0];
+var skullContainer;
+var skull;
+var halfX;
+var halfY;
+var containerW;
+var containerH;
+var percX;
+var percY;
+var counter = 0;
+var $bar = $('.js-debug-progress');
+var $output = $('.js-debug-details');
+var showDebugCheckbox = document.getElementById('show-debug');
+var t0;
+var canvas = document.querySelectorAll('.js-debug-canvas')[0];
+var ctx = canvas.getContext('2d');
+canvas.height = window.innerHeight;
+canvas.width = window.innerWidth;
+
+function init() {
+
+	if (container && !initialized) {
+		containerW = container.offsetWidth - 12
+		containerH = container.offsetHeight - 12
+		halfX = containerW/2
+		halfY = containerH/2
+
+		renderer = new THREE.WebGLRenderer({antialias: true, alpha: false})
+		renderer.setPixelRatio( window.devicePixelRatio )
+		renderer.setSize( containerW, containerH )
+		renderer.setClearColor(0xFFFFFF)
+
+		container.appendChild(renderer.domElement)
+
+		scene = new THREE.Scene()
+
+		camera = new THREE.PerspectiveCamera(45, containerW / containerH, 0.1, 1000)
+
+		scene.add(camera)
+		camera.position.set(-20, 15, 80)
+		camera.lookAt(scene.position)
+
+		window.addEventListener( 'resize', onWindowResize, false )
+		animate()
+
+	} else if (container && initialized) {
+		container.appendChild(renderer.domElement)
+	}
+}
+
+function loadSkull() {
+	if (!isLoading) {
+		t0 = performance.now();
+		isLoading = true;
+		var loader = new THREE.OBJLoader()
+		loader.load('https://s3-us-west-2.amazonaws.com/s.cdpn.io/62921/chill-skull-1.obj', function(model) {
+			backgroundProgress(minLoadTime, function() {
+				skullContainer = new THREE.Object3D();
+				scene.add(skullContainer);
+				skull = model;
+				skull.position.set(0,4,10);
+				skull.children[0].material = new THREE.MeshNormalMaterial();
+				skull.children[1].material = new THREE.MeshNormalMaterial();
+				skull.children[2].material = new THREE.MeshNormalMaterial();
+				
+				$('.spinner').addClass('hide');
+			});
+			
+		})
+	}
+}
+
+function showSkull() {
+	$('.spinner').removeClass('hide');
+
+	if (skull && skullContainer) {
+		$('.spinner').addClass('hide');
+		skullContainer.add(skull)
+	} else {
+		var checkInterval = setInterval(function() {
+			if (skull && skullContainer) {
+				clearInterval(checkInterval);
+				$('.spinner').addClass('hide');
+				skullContainer.add(skull)
+			}
+		}, 20);
+	}
+
+}
+
+function onWindowResize() {
+	containerW = container.offsetWidth - 12
+	containerH = container.offsetHeight - 12
+	halfX = containerW/2
+	halfY = containerH/2
+	renderer.setSize( containerW, containerH )
+	camera.aspect = containerW / containerH
+	camera.updateProjectionMatrix()
+}
+
+function onMouseMove(e) {
+	var mouseX = ( e.pageX - halfX );
+	var mouseY = ( e.pageY - halfY );
+
+	percX = (mouseX / containerW) * 2
+	percY = (mouseY / containerH) * 2
+}
+
+function animate() {
+
+	requestAnimationFrame(animate)
+
+	if(skull && percX && percY) {
+		skullContainer.rotation.y = THREE.Math.clamp(deg2Rad(40) * percX, deg2Rad(-40), deg2Rad(40)) //60deg
+		skullContainer.rotation.x = THREE.Math.clamp(0.5 * percY, deg2Rad(-20), deg2Rad(20)) //60deg
+	}
+
+	renderer.render(scene, camera)
+}
+
+function deg2Rad(deg) {
+	return deg * Math.PI / 180;
+};
+
+function backgroundProgress(duration, onComplete) {
+	TweenMax.to($bar, duration/1000, {
+		scaleX: 1,
+		ease: Power0.easeNone,
+		onUpdate: function() {
+			$output.text(`${Math.floor(this.progress() * 100)}% complete`)
+		},
+		onComplete: onComplete
+	})
+}
+
+function drawDot(accel, mouseData) {
+	if (!isNaN(accel) && showDebug) {
+		if (accel >= DEBUG_THRESHOLD || accel <= DEBUG_THRESHOLD) {
+			var dotColor = 'blue';
+			if (accel < 0) {
+				dotColor = 'red';
+			}
+			ctx.fillStyle = dotColor;
+			ctx.fillRect(mouseData.x - 2.5, mouseData.y - 2.5, 5, 5);
+		}
+	}
+}
+
+futurelink({
+	// links: document.querySelectorAll('.js-load-button'),
+	links: document.querySelectorAll('.js-load-area'),
+	future: function (link) {
+		loadSkull();
+		// `link` is probably going to be clicked soon
+		// Preload some images, if you can!
+	},
+
+	// These also exist, but aren't usually needed:
+	hover: function (link) {},
+	click: function (link) {},
+	debugFn: drawDot
+});
+
+// loadArea.addEventListener('mouseenter', loadSkull);
+button.addEventListener('mousedown', showSkull);
+container.addEventListener('mousemove', onMouseMove);
+showDebugCheckbox.addEventListener('change', function() {
+	ctx.clearRect(0, 0, window.innerWidth, window.innerHeight);
+	showDebug = !showDebug;
+});
+
+init();
+</script>

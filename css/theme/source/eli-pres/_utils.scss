@@ -1,0 +1,23 @@
+/*********************************************
+ * UTILS
+ *********************************************/
+.u-text-left {
+	text-align: left;
+}
+.u-inline-block {
+	display: inline-block;
+}
+.u-pt-04 {
+	padding-top: 0.4em !important;
+}
+.u-underline {
+	position: relative;
+	display: inline;
+	background-size: 100% 0.15em;;
+	background-repeat: no-repeat;
+	background-position: 0 1em;
+	overflow: hidden;
+	font-family: $headingFont;
+	background-image: linear-gradient(to bottom, $color-pink 0%, $color-pink 100%);
+	text-shadow: 0px 0.025em 0.1em rgba(0,0,0,0.15);
+}

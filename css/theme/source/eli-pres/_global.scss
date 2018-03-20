@@ -1,0 +1,81 @@
+/**
+ * Beige theme for reveal.js.
+ *
+ * Copyright (C) 2011-2012 Hakim El Hattab, http://hakim.se
+ */
+
+@font-face {
+  font-family: 'brandon grotesque';
+  src: url('../../fonts/brandon_bld_it.eot'); /* IE9 Compat Modes */
+  src: url('../../fonts/brandon_bld_it?#iefix') format('embedded-opentype'), /* IE6-IE8 */
+       url('../../fonts/brandon_bld_it.woff') format('woff'), /* Modern Browsers */
+       url('../../fonts/brandon_bld_it.ttf')  format('truetype'), /* Safari, Android, iOS */
+       url('../../fonts/brandon_bld_it#db83a1450782399269807c88b8666559') format('svg'); /* Legacy iOS */
+       
+  font-style:   italic;
+  font-weight:  800;
+}
+
+@font-face {
+  font-family: 'pinopolis';
+  src: url('../../fonts/pinopolis.eot'); /* IE9 Compat Modes */
+  src: url('../../fonts/pinopolis.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
+       url('../../fonts/pinopolis.woff') format('woff'), /* Modern Browsers */
+       url('../../fonts/pinopolis.ttf')  format('truetype'), /* Safari, Android, iOS */
+       url('../../fonts/pinopolis.svg#8ff9940f08c2041fdb659662283797d3') format('svg'); /* Legacy iOS */
+       
+  font-style:   normal;
+  font-weight:  400;
+}
+
+
+// Default mixins and settings -----------------
+@import "../../template/mixins";
+@import "../../template/settings";
+// ---------------------------------------------
+
+
+
+// Include theme-specific fonts
+// @import url(../../../lib/font/league-gothic/league-gothic.css);
+@import url(https://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic);
+
+// Override theme settings (see ../template/settings.scss)
+$mainColor: #fafafa;
+$headingColor: #fafafa;
+$headingTextShadow: none;
+$backgroundColor: #171717;
+$linkColor: #8b743d;
+$linkColorHover: lighten( $linkColor, 20% );
+$selectionBackgroundColor: rgba(79, 64, 28, 0.99);
+$headingFont: 'brandon grotesque', Impact, sans-serif;
+$headingFontStyle: italic;
+$headingFontWeight: 600;
+$headingTextTransform: none;
+$headingLineHeight: 1;
+$mainFont: 'pinopolis', sans-serif;
+
+// Background generator
+// @mixin bodyBackground() {
+// 	@include radial-gradient( rgba(247,242,211,1), rgba(255,255,255,1) );
+// }
+/*********************************************
+ * CUSTOM VARS
+ *********************************************/
+
+$color-pink: #ff4cff;
+
+
+
+// Theme template ------------------------------
+@import "../../template/theme";
+// ---------------------------------------------
+
+* {
+	-webkit-font-smoothing: antialiased;
+}
+
+.reveal a:hover {
+	color: $color-pink;
+	cursor: pointer;
+}

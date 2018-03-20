@@ -1,0 +1,171 @@
+@import "eli-pres/_global";
+@import "eli-pres/_mixins";
+@import "eli-pres/_headers";
+@import "eli-pres/_list";
+@import "eli-pres/_footer";
+@import "eli-pres/_utils";
+
+.emoji {
+	font-style: normal !important;
+}
+
+/*********************************************
+ * State modes
+ *********************************************/
+* {
+	// color: darken(#FF4DFD, 10%) !important;
+}
+.reveal .progress {
+	height: 0.15em;
+	span {
+		background: $color-pink;
+	}
+}
+
+.reveal section .st-logo {
+	width: 25%;
+	background: transparent;
+	box-shadow: none;
+	margin-right: 1em;
+	&:last-child {
+		margin-right: 0;
+	}
+}
+.frame {
+	width: 100%;
+	height: 100vmin;
+	@media screen and (min-width: 700px) {
+		height: 50vh;
+	}
+}
+
+.active {
+	transition: 0.2s all;
+	-webkit-user-select: none;
+	cursor: pointer;
+	display: inline-block;
+	border-radius: 0.05em;
+	line-height: 0.8;
+	&:hover {
+		background: $color-pink;
+	}
+	&:active {
+		background: darken($color-pink, 30%);
+		transform: translateY(10%);
+	}
+}
+
+.reveal .slides section .fragment.anim-stroke {
+	opacity: 1;
+	visibility: visible;
+	position: relative;
+	display: inline;
+	background-size: 0% 0.15em;;
+	background-repeat: no-repeat;
+	background-position: 0 1em;
+	overflow: hidden;
+	font-family: $headingFont;
+	background-image: linear-gradient(to bottom, $color-pink 0%, $color-pink 100%);
+	text-shadow: 0px 0.025em 0.1em rgba(0,0,0,0.2);
+	&.visible {
+		background-size: 100% 0.15em;;
+	}
+}
+.reveal .slides section .fragment.anim-spin {
+	display: inline-block;
+	&.visible {
+		animation: 0.4s spin 1 forwards;
+	}
+}
+.reveal .slides section .fragment.anim-spin--slow {
+	display: inline-block;
+	margin-top: 1em;
+	line-height: 1;
+	transform-origin: 50% 60%;
+	&.visible {
+		animation: 3s spin linear infinite;
+	}
+}
+.reveal .slides section .fragment.anim-bounce {
+	span {
+		display: inline-block;
+		transform: translateY(-1em);
+		transition: transform 0.3s, opacity 0.1s;
+		transition-timing-function: cubic-bezier(0, 0.68, 0, 1.56);
+		opacity: 0;
+	}
+	@for $i from 1 through 29 {
+		span:nth-child(#{$i}) {
+			transition-delay: #{30 * $i}ms;
+		}
+	}
+	&.visible {
+		span {
+			opacity: 1;
+			transform: translateY(0);
+		}
+	}
+}
+
+img.transparent {
+	box-shadow: none !important;
+	background: transparent !important;
+}
+
+.lil-button {
+	cursor: pointer;
+	font-size: 0.6em;
+	font-family: $mainFont;
+	color: rgba(0, 0, 0, 0.4);
+	appearance: none;
+	background: transparent;
+	padding: 0.5em 1em;
+	margin-top: 1em;
+	border: 0.1em solid rgba(0, 0, 0, 0.4);
+	// opacity: 0.5;
+	transition: all 0.2s;
+	text-transform: uppercase;
+	letter-spacing: 0.1em;
+	&:hover {
+		background-color: rgba(0, 0, 0, 0.4);
+		color: #efefef;
+	}
+	&:active {
+		// background-color: rgba(0, 0, 0, 0.8);
+		transform: translateY(5%);
+		// color: #fff;
+	}
+	&:focus {
+		outline: none;
+	}
+}
+.thank-you {
+	display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+}
+.rad-pointer.rad-pointer.rad-pointer.rad-pointer.rad-pointer {
+	background-color: transparent !important;
+	box-shadow: none !important;
+	// animation: shake 1s infinite;
+	// animation: 0.25s shake step-end infinite;
+	animation: 0.25s shake infinite;
+	// width: 2em;
+	height: 2em;
+	width: auto;
+	margin-left: 0.5em !important;
+	margin-right: 0.5em !important;
+}
+
+@keyframes shake {
+	0%, 100% { transform: translateX(-5%) rotate(7.77deg) }
+    50% { transform: translateX(5%) rotate(7.77deg) }
+}
+@keyframes spin {
+	0% { transform: rotate(0deg) }
+	100% { transform: rotate(360deg) }
+}
+
+
+@import "eli-pres/_print";

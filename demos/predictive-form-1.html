@@ -1,0 +1,167 @@
+<head>
+	<link rel="stylesheet prefetch" href="lib/css/foundation-grid-only.min.css">
+	<link rel="stylesheet prefetch" href="../css/theme/eli-pres-light.css">
+	<script src="lib/js/tweenmax.min.js"></script>
+	<script src="lib/js/jquery.min.js"></script>
+
+	<style>
+		* {
+			transition: 400ms opacity;
+		}
+		body.demo {
+			background-color: transparent;
+		}
+		.spinner {
+			width: 10em;
+			display: inline-block;
+			padding-top: 4em;
+		}
+		.spinner img {
+			width: 100%;
+		}
+		.container {
+			position: relative;
+			padding-top: 2em;
+		}
+
+		.relative {
+			position: relative;
+		}
+		.fade-out {
+			opacity: 0;
+		}
+		.hide {
+			display: none;
+		}
+		.cards {
+			display: flex;
+			margin-bottom: 1rem;
+		}
+		.cards__card {
+			width: 15%;
+			margin-right: 3%;
+		}
+
+		.spinner-container {
+			position: absolute;
+			top: 0;
+			left: 50%;
+			transform: translateX(-50%);
+		}
+	</style>
+</head>
+<body class="demo">
+	<div class="container">
+		<div class="row align-center">
+			<div class="column small-6 relative">
+				<div class="section" id="step-1">
+					<div class="u-mb-2r">
+						<h4>Shipping info</h4>
+					</div>
+					<div class="text-input u-mb-1r">
+						<label class="text-input__label u-block">First Name</label>
+						<input class="text-input__input" type="text" />
+					</div>
+					<div class="text-input u-mb-2r">
+						<label class="text-input__label u-block">Last Name</label>
+						<input class="text-input__input" type="text" />
+					</div>
+					<div class="text-input u-mb-1r">
+						<label class="text-input__label u-block">Shipping Address</label>
+						<input class="text-input__input" type="text" />
+					</div>
+					<button class="button button--submit" type="button">Check out</button>
+				</div>
+
+				<div class="section fade-out hide" id="step-2">
+					<div class="u-mb-2r">
+						<h4>Payment details</h4>
+					</div>
+					<div class="cards">
+						<div class="cards__card"><img src="../img/card-discover.png" alt=""></div>
+						<div class="cards__card"><img src="../img/card-paypal.png" alt=""></div>
+						<div class="cards__card"><img src="../img/card-amex.png" alt=""></div>
+						<div class="cards__card"><img src="../img/card-mastercard.png" alt=""></div>
+						<div class="cards__card"><img src="../img/card-visa.png" alt=""></div>
+					</div>
+					<div class="text-input u-mb-1r">
+						<label class="text-input__label u-block">Card Number</label>
+						<input class="text-input__input" type="text" />
+					</div>
+					<div class="text-input u-mb-1r">
+						<label class="text-input__label u-block">Billing Address</label>
+						<input class="text-input__input" type="text" />
+					</div>
+					<button class="button button--submit" type="button">Confirm order</button>
+				</div>
+
+				<div class="spinner-container section fade-out hide u-text-center" id="spinner">
+					<div class="spinner"></div>
+				</div>
+			</div>
+
+			<div class="column small-6 full-height">
+				<div class="debug">
+					<h3 class="debug__details">Step 2 Load Progress</h3>
+					
+					<div class="debug__bar">
+						<div class="debug__progress js-debug-progress"></div>
+					</div>
+					<h6 class="js-debug-details debug__readout">0% complete</h6>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+
+<script>
+var step2Ready = false;
+var counter = 0;
+var $bar = $('.js-debug-progress');
+var $output = $('.js-debug-details');
+const LOAD_TIME = 3000;
+
+$('.button--submit').on('click', function() {
+  loadStep2();
+});
+
+function loadStep2() {
+	fade($('#step-1'), 'out');
+	fade($('#spinner'), 'in');
+	
+	backgroundProgress(LOAD_TIME, function() {
+		fade($('#spinner'), 'out');
+		fade($('#step-2'), 'in');
+	});
+}
+
+function fade($el, inOut) {
+	return new Promise(function(resolve, reject) {
+		if (inOut === 'out') {
+			$el.addClass('fade-out');
+			setTimeout(function() {
+				$el.addClass('hide');
+				resolve();
+			}, 400);
+		} else {
+			$el.removeClass('hide');
+			setTimeout(function() {
+				$el.removeClass('fade-out');
+			}, 10);
+			setTimeout(function() {
+				resolve();
+			}, 400);
+		}
+	})
+}
+
+function backgroundProgress(duration, onComplete) {
+	TweenMax.to($bar, duration / 1000, {
+		width: '100%',
+		onUpdate: function() {
+			$output.text(`${parseInt(this.progress() * 100)}% complete`);
+		},
+		onComplete: onComplete
+	});
+}
+</script>

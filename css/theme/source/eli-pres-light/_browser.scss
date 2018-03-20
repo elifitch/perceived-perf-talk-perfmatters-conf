@@ -1,0 +1,36 @@
+.browser {
+	border-radius: 0.5rem;
+	border: 4px solid #ccc;
+	width: 80%;
+	height: 0;
+	left: 50%;
+	transform: translateX(-50%);
+	padding: 1rem;
+	padding-top: 3rem;
+	padding-bottom: 45%;
+	position: fixed;
+}
+.browser:before {
+	content: '';
+	display: block;
+	top: 0;
+	left: 0;
+	width: 100%;
+	background-color: #ccc;
+	position: absolute;
+	height: 2rem;
+	background-image: 
+		radial-gradient(circle closest-side, #D16B5A calc(100% - 0.5px), transparent 100%), 
+		radial-gradient(circle closest-side, #E5BE39 calc(100% - 0.5px), transparent 100%), 
+		radial-gradient(circle closest-side, #81C445 calc(100% - 0.5px), transparent 100%);
+	background-size: 0.8rem 0.8rem;
+	background-position: 1rem, 2.5rem, 4rem;
+	background-repeat: no-repeat;
+}
+.browser__threshold {
+	position: absolute;
+	width: calc(100% + 2em);
+	left: -1em;
+	bottom: -0.3em;
+	border-top: 0.3em dashed #43d8f8;
+}
