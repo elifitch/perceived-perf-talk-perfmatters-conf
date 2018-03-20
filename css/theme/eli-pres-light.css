@@ -624,7 +624,7 @@ html.footer-fade .footer {
   .demo .debug__readout {
     font-family: 'pinopolis'; }
   .demo .media {
-    padding: 1rem;
+    padding: 0.5em;
     border: 1px solid black;
     background-color: #fafafa;
     box-shadow: 0px 0px 10px 4px rgba(0, 0, 0, 0.15);
@@ -649,6 +649,8 @@ html.footer-fade .footer {
   .demo .heart__border {
     transform: scale(0.75);
     transform-origin: center; }
+  .demo .media--fluid {
+    font-size: calc(16px + 6 * ((100vw - 320px) / 680)); }
   .demo .text-input__label {
     font-size: 0.5em;
     font-family: "pinopolis", sans-serif; }

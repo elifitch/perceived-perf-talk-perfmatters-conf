@@ -1,0 +1,170 @@
+<head>
+	<link rel="stylesheet prefetch" href="lib/css/foundation-grid-only.min.css">
+	<link rel="stylesheet prefetch" href="../css/theme/eli-pres-light.css">
+	<script src="lib/js/tweenmax.min.js"></script>
+	<script src="lib/js/jquery.min.js"></script>
+
+	<style>
+		* {
+			transition: 400ms opacity;
+		}
+		body.demo {
+			background-color: transparent;
+		}
+		.spinner {
+			width: 10em;
+			display: inline-block;
+			padding-top: 4em;
+		}
+		.spinner img {
+			width: 100%;
+		}
+		.container {
+			position: relative;
+			padding-top: 2em;
+		}
+
+		.relative {
+			position: relative;
+		}
+		.fade-out {
+			opacity: 0;
+		}
+		.hide {
+			display: none;
+		}
+		.cards {
+			display: flex;
+			margin-bottom: 1rem;
+		}
+		.cards__card {
+			width: 15%;
+			margin-right: 3%;
+		}
+
+		.spinner-container {
+			position: absolute;
+			top: 0;
+			left: 50%;
+			transform: translateX(-50%);
+		}
+	</style>
+</head>
+<body class="demo">
+	<div class="container">
+		<div class="row align-center">
+			<div class="column small-6 relative">
+				<div class="section" id="step-1">
+					<div class="u-mb-2r">
+						<h4>Log In</h4>
+					</div>
+					<div class="text-input u-mb-1r">
+						<label class="text-input__label u-block">Username</label>
+						<input class="text-input__input" type="text" />
+					</div>
+					<div class="text-input u-mb-2r">
+						<label class="text-input__label u-block">Password</label>
+						<input class="text-input__input" type="password" />
+					</div>
+					<button class="button button--submit" type="button">Log in</button>
+				</div>
+
+				<div class="section fade-out hide" id="step-2">
+          <div class="row align-center">
+            <div class="column small-10 relative">
+              <div class="media media--fluid">
+                <div class="media__img">
+                  <img src="../img/sassy-sloth.jpg" alt="">
+                </div>
+                <div class="media__description">
+                  <h3>Such a sassy sloth 💅💅💅</h3>
+                </div>
+                <div class="media__controls js-like-button">
+                  <div class="media__like">
+                    <svg class="heart" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" fill="#000000" version="1.1"
+                      x="0px" y="0px" viewBox="0 0 100 100" enable-background="new 0 0 100 100" xml:space="preserve">
+                      <g>
+                        <path class="heart__border" d="M68.896,11.653c-7.243,0-13.985,2.917-18.896,8.091c-4.912-5.174-11.652-8.091-18.896-8.091   C16.711,11.653,5,23.364,5,37.757c0,25.25,42.057,48.978,43.847,49.976l1.101,0.614l1.124-0.571C52.866,86.865,95,65.155,95,37.757   C95,23.364,83.289,11.653,68.896,11.653z M50.049,82.955C43.462,79.064,9.737,58.141,9.737,37.757   c0-11.782,9.586-21.368,21.368-21.368c6.728,0,12.928,3.075,17.011,8.438L50,27.303l1.885-2.475   c4.082-5.363,10.282-8.438,17.011-8.438c11.782,0,21.368,9.586,21.368,21.368C90.263,59.952,56.668,79.35,50.049,82.955z"
+                        />
+                        <path class="heart__fill js-heart-fill" d="M68.896,16.39c-6.729,0-12.929,3.075-17.011,8.438L50,27.303l-1.885-2.475   c-4.083-5.363-10.283-8.438-17.011-8.438c-11.782,0-21.368,9.586-21.368,21.368c0,20.384,33.725,41.307,40.312,45.198   c6.619-3.605,40.214-23.003,40.214-45.198C90.263,25.975,80.678,16.39,68.896,16.39z"
+                        />
+                      </g>
+                    </svg>
+                  </div>
+                  <span>like</span>
+                </div>
+              </div>
+            </div>
+          </div>
+				</div>
+
+				<div class="spinner-container section fade-out hide u-text-center" id="spinner">
+					<div class="spinner"></div>
+				</div>
+			</div>
+
+			<div class="column small-6 full-height">
+				<div class="debug">
+					<h3 class="debug__details">App Bundle Load Progress</h3>
+					
+					<div class="debug__bar">
+						<div class="debug__progress js-debug-progress"></div>
+					</div>
+					<h6 class="js-debug-details debug__readout">0% complete</h6>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+
+<script>
+var step2Ready = false;
+var counter = 0;
+var $bar = $('.js-debug-progress');
+var $output = $('.js-debug-details');
+const LOAD_TIME = 3000;
+
+$('.button--submit').on('click', function() {
+  loadStep2();
+});
+
+function loadStep2() {
+	fade($('#step-1'), 'out');
+	fade($('#spinner'), 'in');
+	
+	backgroundProgress(LOAD_TIME, function() {
+		fade($('#spinner'), 'out');
+		fade($('#step-2'), 'in');
+	});
+}
+
+function fade($el, inOut) {
+	return new Promise(function(resolve, reject) {
+		if (inOut === 'out') {
+			$el.addClass('fade-out');
+			setTimeout(function() {
+				$el.addClass('hide');
+				resolve();
+			}, 400);
+		} else {
+			$el.removeClass('hide');
+			setTimeout(function() {
+				$el.removeClass('fade-out');
+			}, 10);
+			setTimeout(function() {
+				resolve();
+			}, 400);
+		}
+	})
+}
+
+function backgroundProgress(duration, onComplete) {
+	TweenMax.to($bar, duration / 1000, {
+		width: '100%',
+		onUpdate: function() {
+			$output.text(`${parseInt(this.progress() * 100)}% complete`);
+		},
+		onComplete: onComplete
+	});
+}
+</script>
