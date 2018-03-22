@@ -160,7 +160,7 @@
       </section>
       <section>
         <h2>We optimize for objective time.</h2>
-        <h2 class="fragment">Even with perceived perf!</h2>
+        <!-- <h2 class="fragment">Even with perceived perf!</h2> -->
         <aside class="notes">
           <p>We're good at objective time, because this is what we optimize for.</p>
           <p>When users report that our app is slow, we usually focus on making it objectively faster. Reducing load time by
@@ -194,7 +194,7 @@
         </aside>
       </section>
       <section>
-        <h2>Time differences of
+        <h2>Objective Time differences of
           <span class="fragment anim-stroke">20%</span> or less are imperceptible.</h2>
         <a class="citation" href="https://web.archive.org/web/20130410073412/http://torbit.com/blog/2011/11/29/psychology-of-software-performance/" target="_blank">Steve Seow, Microsoft</a>
         <aside class="notes">
@@ -225,8 +225,9 @@
       </section>
       <section>
         <h2>
-          How will you use your time?
+          Don't chase diminishing returns.
         </h2>
+        <h2 class="fragment">Are you the bottleneck?</h2>
         <aside class="notes">
           
         </aside>
@@ -278,7 +279,7 @@
           <p>Dopamine is the main neurotransmitter associated with time perception per the guardian https://www.theguardian.com/science/2013/jan/01/psychology-time-perception-awareness-research</p>
         </aside>
       </section>
-      <section>
+      <!-- <section>
         <h2>
           <span class="fragment emoji">🚗💨</span>
           <br>vs.<br>
@@ -288,7 +289,7 @@
           <p>We've all been in that situation where the faster route involves sitting in traffic on a main route, but it feels
             much faster to scoot along through side streets, even if it does take a few more minutes to get there.</p>
         </aside>
-      </section>
+      </section> -->
       <section>
         <video src="/img/website-active-passive-annotated.mp4" controls />
         <aside class="notes">
@@ -602,7 +603,11 @@
         <h2>Bars with accelerating
           <br>bands feel
           <span class="fragment anim-stroke">12%</span> faster.</h2>
-        <a class="citation" target="_blank" href="http://www.chrisharrison.net/projects/progressbars2/ProgressBarsHarrison.pdf">Chris Harrison, Zhiquan Yeo, and Scott Hudson, Carnegie Mellon</a>
+          <div class="u-text-center">
+            <a class="citation u-full-width" target="_blank" href="http://www.chrisharrison.net/projects/progressbars2/ProgressBarsHarrison.pdf">
+              Chris Harrison, Zhiquan Yeo, and Scott Hudson, Carnegie Mellon
+            </a>
+          </div>
         <aside class="notes">
           <p>He found that they feel 12% faster. So just from this one change we can get half way to our Just Noticeable Difference
             threshold.</p>
@@ -696,9 +701,9 @@
 const API_EXPECTED_TIME = 1000;
 const SOME_OTHER_EXPECTED_TIME = 2000;
 
-function init() {
+function getImage() {
 	let t0 = performance.now();
-	fetch(`${VERY_SERIOUS_API_URL}`).then(response => {
+	fetch(`${GET_IMAGE_API_URL}`).then(response => {
 		const apiRoundtrip = performance.now() - t0;
 		setPerformanceScalar(apiRoundtrip, API_EXPECTED_TIME);
 		// Do stuff
@@ -706,19 +711,14 @@ function init() {
 }
 
 function setPerformanceScalar(observed, expected) {
-	const performanceScalar = observed / expected;
+	this.performanceScalar = observed / expected;
 	// ...
 	// tuck this away in app state, local storage, a global variable, etc
 }
 
-function getPerformanceScalar() {
-	// retreive your saved performance data
-	return performanceScalar;
-}
-
 //...
 
-<div class="progress" duration={SOME_OTHER_EXPECTED_TIME*getPerformanceScalar()}></div>
+<div class="progress" duration={SOME_OTHER_EXPECTED_TIME*this.performanceScalar}></div>
 						</code>
 					</pre>
 
@@ -741,9 +741,9 @@ function getPerformanceScalar() {
         <div class="list">
           <h2 class="list__heading">Some tips</h2>
           <ul>
+            <li class="fragment">Set baseline times with your test runner.</li>
             <li class="fragment">Normalize for resource or payload.</li>
             <li class="fragment">Adapt your whole loading scheme.</li>
-            <li class="fragment">Set baseline times with your test runner.</li>
           </ul>
         </div>
         <aside class="notes">
@@ -851,7 +851,7 @@ function getPerformanceScalar() {
         </aside>
       </section>
       <section>
-        <h2>Checkout form</h2>
+        <h2>Login form</h2>
         <aside class="notes">
 
         </aside>
@@ -883,7 +883,7 @@ function getPerformanceScalar() {
       </section>
       <section>
         <h2>
-          <span class="fragment anim-stroke">~2 second</span> head start!</h2>
+          <span class="fragment anim-stroke">~4+ second</span> head start!</h2>
         <aside class="notes">
         </aside>
       </section>
@@ -901,9 +901,6 @@ function getPerformanceScalar() {
           <p>In this demo we'll load a 3d model into this little window when a user clicks a big, isolated CTA button.</p>
         </aside>
       </section>
-      <section class="center">
-        <img src="/img/expanding-mind.jpg" class="u-max-h-45vh" />
-      </section>
       <section>
         <div class="list">
           <h2 class="list__heading">Exploiting behavioral quirks</h2>
@@ -917,8 +914,8 @@ function getPerformanceScalar() {
         <h2>People watch hovers.</h2>
         <aside class="notes">
           <p>We can do even better.</p>
-          <p>If we're loading before users click, then we can take advantage of hover animations to mask loading, just like
-            active animations when using mousedown.</p>
+          <p>If we're loading before users click, then we can take advantage of hover animations to mask loading, just like active
+            animations when using mousedown.</p>
         </aside>
       </section>
       <section>
@@ -932,6 +929,9 @@ function getPerformanceScalar() {
         <aside class="notes">
           <p>Can buy you up to 600ms extra.</p>
         </aside>
+      </section>
+      <section class="center">
+        <img src="/img/expanding-mind.jpg" class="u-max-h-45vh" />
       </section>
       <section>
         <h2>Detect decelleration

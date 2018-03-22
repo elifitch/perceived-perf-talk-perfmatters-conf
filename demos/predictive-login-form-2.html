@@ -194,7 +194,7 @@
       return this.value === '';
     });
     //also like....validate IRL. This is fake town.
-    if (!empties.length) {
+    if (empties.length <= 1) {
       return true;
     } else {
       return false;
