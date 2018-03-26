@@ -7,9 +7,12 @@
 	transform: translateX(-50%);
 	padding: 1rem;
 	padding-top: 3rem;
-	padding-bottom: 45%;
+	// padding-bottom: 45%;
+	padding-bottom: 35%;
 	position: fixed;
+	top: 10vh;
 }
+    
 .browser:before {
 	content: '';
 	display: block;

@@ -34,8 +34,10 @@
 	border: none;
 }
 .reveal .main-title {
-	color: $color-pink;
-	@include ThreeDText($color-purple, 15, 0.5);
+	// color: $color-pink;
+	// @include ThreeDText($color-purple, 15, 0.5);
+	color: $color-primary;
+	@include ThreeDText($color-secondary, 15, 0.5);
 }
 .reveal .title {
 	// font-size: 3.2em;
@@ -47,8 +49,8 @@
 	// color: $color-purple;
 	// @include ThreeDText($color-electric-green, 10, 0.5);
 
-	color: $color-pink;
-	@include ThreeDText($color-purple, 10, 0.5);
+	color: $color-primary;
+	@include ThreeDText($color-secondary, 10, 0.5);
 
 	// @include CrossBox($color-electric-blue, $color-electric-green);
 	// @include CrossBox($color-purple, $color-electric-green);
@@ -58,9 +60,9 @@
 	padding-bottom: 0.1em;
 }
 .reveal .title--gradient {
-	color: $color-pink;
+	color: $color-primary;
 	@supports (-webkit-background-clip: text) {
-		background: linear-gradient(150deg, $color-pink, $color-purple) repeat;
+		background: linear-gradient(150deg, $color-primary, $color-secondary) repeat;
 		-webkit-text-fill-color: transparent;
 		-webkit-background-clip: text;
 		color: transparent;
