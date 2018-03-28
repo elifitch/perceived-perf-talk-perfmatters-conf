@@ -321,7 +321,8 @@ body {
 .reveal h4,
 .reveal h5,
 .reveal h6 {
-  font-family: "brandon grotesque", Impact, sans-serif !important; }
+  font-family: "brandon grotesque", Impact, sans-serif !important;
+  line-height: 1.1; }
   .reveal h1::selection, .reveal h1::-moz-selection,
   .reveal h2::selection,
   .reveal h2::-moz-selection,
@@ -930,6 +931,9 @@ input + .switch-paddle {
 
 .u-relative {
   position: relative; }
+
+.u-color-primary {
+  color: #ff4cff !important; }
 
 .emoji {
   font-style: normal !important; }

@@ -9,7 +9,6 @@
 		}
 		.bold {
 			font-weight: bold;
-			color: red;
 		}
 		.button:active {
 			transform: none !important;
@@ -38,6 +37,6 @@ function startTimer() {
 function endTimer() {
 	const nowish = Date.now();
 	const timey = nowish - startTime;
-	$('.readout').html(`Mousedown fired <span class="bold">${timey}ms</span> before click event`);
+	$('.readout').html(`Mousedown fired <span class="bold u-color-primary">${timey}ms</span> before click event`);
 }
 </script>
