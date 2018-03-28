@@ -48,14 +48,15 @@
         <h1 class="main-title">Perceived Performance</h1>
         <h3>The only kind that really matters.</h3>
       </section>
-      <section data-state="show-pointer">
+      <section>
         <h2>Hi, I'm Eli.</h2>
         <h4 class="fragment">I like to make things on the internet</h4>
       </section>
-      <section>
+      <section data-transition="fade">
         <img class="st-logo" src="img/mapbox-logo.svg" alt="">
         <img class="st-logo fragment" src="img/codepen.svg" alt="">
         <img class="st-logo fragment" src="img/skull-fella.png" alt="">
+        <span class="fragment fragment--show-pointer"></span>
         <aside class="notes">
           <p>I lead a team of amazing developers making a WebGL event space diagramming app for Social Tables, a startup in
             Washington, DC.</p>
@@ -63,7 +64,7 @@
           <p>I love to make 3d art, animations, and games in my free time.</p>
         </aside>
       </section>
-      <section>
+      <section class="slide--hide-pointer">
         <div class="list">
           <h2 class="list__heading">Today I'll be howling about</h2>
           <ul>
@@ -85,7 +86,7 @@
           </aside>
         </div>
       </section>
-      <section data-background-image="XXXimg/pink-orange-gradient.svg" data-state="footer-fade">
+      <section data-background-image="XXXimg/pink-orange-gradient.svg" data-state="footer-fade" class="slide--hide-pointer">
         <h1 class="title">Why Perceived
           <br>Performance Matters
         </h1>
@@ -1106,6 +1107,17 @@ function setPerformanceScalar(observed, expected) {
           console.log(target)
           document.getElementById(target).contentWindow.location.reload();
         })
+
+        Reveal.addEventListener('fragmentshown', function (event) {
+          if (event.fragment.classList.contains('fragment--show-pointer')) {
+            document.body.classList.add('show-pointer');
+          }
+        });
+        Reveal.addEventListener('slidechanged', function (event) {
+          if (event.currentSlide.classList.contains('slide--hide-pointer')) {
+            document.body.classList.remove('show-pointer');
+          }
+        });
       </script>
 </body>
 
