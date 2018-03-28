@@ -1,7 +1,14 @@
+// @mixin ThreeDText ($color, $depth, $darken: 0) {
+//   $val: ();
+//   @for $i from 1 to $depth {
+//     $val: append($val, #{$i}px #{$i}px 0px darken($color, $darken * $i), comma);
+//   }
+//   text-shadow: $val;
+// }
 @mixin ThreeDText ($color, $depth, $darken: 0) {
   $val: ();
   @for $i from 1 to $depth {
-    $val: append($val, #{$i}px #{$i}px 0px darken($color, $darken * $i), comma);
+    $val: append($val, #{$i}px #{$i}px 0px darken($color, $darken * ($i * 0.5)), comma);
   }
   text-shadow: $val;
 }

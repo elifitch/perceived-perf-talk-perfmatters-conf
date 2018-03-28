@@ -48,7 +48,7 @@
         <h1 class="main-title">Perceived Performance</h1>
         <h3>The only kind that really matters.</h3>
       </section>
-      <section>
+      <section data-state="show-pointer">
         <h2>Hi, I'm Eli.</h2>
         <h4 class="fragment">I like to make things on the internet</h4>
       </section>
@@ -1062,7 +1062,9 @@ function setPerformanceScalar(observed, expected) {
       </div>
       <div class="footer footer--fixed">
         <a class="footer__logo footer__item" href="http://eli.wtf/" target="_blank">Eli.wtf</a>
-        <a class="footer__social footer__item" href="http://twitter.com/elifitch" target="_blank">@elifitch</a>
+        <a class="footer__social footer__item u-relative" href="http://twitter.com/elifitch" target="_blank">
+          @elifitch<div class="footer__pointer-wrapper"><div class="footer__pointer"></div></div>
+        </a>
       </div>
 
 
