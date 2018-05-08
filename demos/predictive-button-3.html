@@ -210,22 +210,23 @@ function init() {
 
 function loadSkull() {
 	if (!isLoading) {
+		console.log('loading')
 		t0 = performance.now();
 		isLoading = true;
 		var loader = new THREE.OBJLoader()
-		loader.load('https://s3-us-west-2.amazonaws.com/s.cdpn.io/62921/chill-skull-1.obj', function(model) {
-			backgroundProgress(minLoadTime, function() {
+		loader.load('../img/chill-skull-1.obj', function (model) {
+			backgroundProgress(minLoadTime, function () {
 				skullContainer = new THREE.Object3D();
 				scene.add(skullContainer);
 				skull = model;
-				skull.position.set(0,4,10);
+				skull.position.set(0, 4, 10);
 				skull.children[0].material = new THREE.MeshNormalMaterial();
 				skull.children[1].material = new THREE.MeshNormalMaterial();
 				skull.children[2].material = new THREE.MeshNormalMaterial();
-				
+
 				$('.spinner').addClass('hide');
 			});
-			
+
 		})
 	}
 }
